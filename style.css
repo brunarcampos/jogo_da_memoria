@@ -27,3 +27,16 @@ body{
   color: #ffffff;
   font-size: 16px;
 }
+
+.cards-grid{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px
+}
+
+.card{
+  width: calc(25% - 5px);
+  aspect-ratio: 1/1;
+  background-color: #8234e0;
+}
