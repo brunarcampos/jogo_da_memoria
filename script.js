@@ -1,41 +1,129 @@
-// Variaveis de estado do jogo
-let flippedCards = []; // Array para armazenar as cartas viradas (sempre terá no máximo 2 cartas)
-let matchedPairs = 0; // Contador de pares encontrados
-let attempts = 0; // Contador de tentativas
-let isChechingPair = false; // Trava o jogo enquanto verifica se as cartas viradas são iguais
+let flippedCards = [];
+let matchedPairs = 0;
+let attempts = 0;
+let isCheckingPair = false;
 
 
-// Array com todas as cartas do jogo
 const cardItems = [
-  {id: 1, content: "🚀", matched: false},
-  {id: 2, content: "🚀", matched: false},
-  {id: 3, content: "💻", matched: false},
-  {id: 4, content: "💻", matched: false},
-  {id: 5, content: "🎉", matched: false},
-  {id: 6, content: "🎉", matched: false},
-  {id: 7, content: "🎨", matched: false},
-  {id: 8, content: "🎨", matched: false},
-  {id: 9, content: "🧩", matched: false},
-  {id: 10, content: "🧩", matched: false},
-  {id: 11, content: "🎮", matched: false},
-  {id: 12, content: "🎮", matched: false},
-  {id: 13, content: "🎲", matched: false},
-  {id: 14, content: "🎲", matched: false},
-  {id: 15, content: "🎪", matched: false},
-  {id: 16, content: "🎪", matched: false}
+  { id: 1, content: "🚀", matched: false },
+  { id: 2, content: "🚀", matched: false },
+  { id: 3, content: "💻", matched: false },
+  { id: 4, content: "💻", matched: false },
+  { id: 5, content: "🎉", matched: false },
+  { id: 6, content: "🎉", matched: false },
+  { id: 7, content: "🎨", matched: false },
+  { id: 8, content: "🎨", matched: false },
+  { id: 9, content: "🧩", matched: false },
+  { id: 10, content: "🧩", matched: false },
+  { id: 11, content: "🎮", matched: false },
+  { id: 12, content: "🎮", matched: false },
+  { id: 13, content: "🎲", matched: false },
+  { id: 14, content: "🎲", matched: false },
+  { id: 15, content: "🎪", matched: false },
+  { id: 16, content: "🎪", matched: false }
 ]
- // Função para embaralhar as cartas
 function shuffleCards(array) {
-  const shuffled = array.sort(()=> (Math.random() > 0.5 ? 1 : -1)); // Positivo vai depois, negativo vai antes
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
   return shuffled;
 }
 
-function renderCards() {
-  const deck = document.getElementById("deck"); // Seleciona o elemento do deck no HTML
-  deck.innerHTML = ""; // Limpa o conteúdo do deck antes de renderizar as cartas
+function createCard(card) {
+  const cardElement = document.createElement("div");
+  cardElement.className = "card";
 
-  const cards = shuffleCards(cardItems); // Array com as cartas embaralhadas
-  cards.forEach((item) => console.log(item)); // Loga cada carta no console (para debug)
+  const emoji = document.createElement("span");
+  emoji.className = "card-emoji";
+  emoji.textContent = card.content;
+
+  cardElement.appendChild(emoji);
+
+  cardElement.addEventListener("click", () => handleCardClick(cardElement, card));
+  return cardElement;
 }
 
-renderCards(); // Chama a função para renderizar as cartas
+function renderCards() {
+  const deck = document.getElementById("deck");
+  deck.innerHTML = "";
+
+  const cards = shuffleCards(cardItems);
+  cards.forEach((item) => {
+    const cardElement = createCard(item);
+    deck.appendChild(cardElement);
+  });
+}
+
+function handleCardClick(cardElement, card) {
+  if (isCheckingPair || cardElement.classList.contains("revealed")) {
+    return;
+  }
+
+  cardElement.classList.add("revealed");
+  flippedCards.push({ cardElement, card });
+
+  if (flippedCards.length === 2) {
+    isCheckingPair = true;
+    attempts++;
+
+    const [firstCard, secondCard] = flippedCards;
+
+    if (firstCard.card.content === secondCard.card.content) {
+      // Acertou o par
+      matchedPairs++;
+
+      cardItems.forEach((item) => {
+        if (item.content === firstCard.card.content) {
+          item.matched = true;
+        }
+      });
+
+      flippedCards = [];
+      isCheckingPair = false;
+      updateStats();
+
+      const toFind = cardItems.find((item) => item.matched === false);
+      if (!toFind) {
+        // setTimeout dá tempo do navegador desenhar a última carta antes do alert
+        setTimeout(() => {
+          alert(`Parabéns! Você encontrou todos os pares em ${attempts} tentativas.`);
+        }, 300);
+      }
+    } else {
+      // Errou: desvira as cartas depois de um tempo
+      updateStats();
+
+      setTimeout(() => {
+        firstCard.cardElement.classList.remove("revealed");
+        secondCard.cardElement.classList.remove("revealed");
+
+        flippedCards = [];
+        isCheckingPair = false;
+      }, 1000);
+    }
+  }
+}
+
+function updateStats() {
+  document.getElementById("stats").textContent = `${matchedPairs} Acertos de ${attempts} Tentativas`;
+}
+
+function resetGame() {
+  flippedCards = [];
+  matchedPairs = 0;
+  attempts = 0;
+  isCheckingPair = false;
+  cardItems.forEach(card => (card.matched = false));
+
+  renderCards();
+  updateStats();
+}
+
+function initGame() {
+  renderCards();
+  document.getElementById("reset-button").addEventListener("click", resetGame);
+}
+
+initGame();

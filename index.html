@@ -1,28 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="icon" type="image/png" href="assets/logo.svg">
-  <link rel="stylesheet" href="style.css">
-  <title>Memory Game</title>
-</head>
-<body>
-  <main class="game-container">
-    <header class="game-header">
-      <img src="./assets/logo.svg" alt="Memory Game Logo" class="logo">
-      <span class="stats"> 0 Acertos de 0 Tentativas</span>
-    </header>
-    <div id="deck" class="cards-grid">  
-    </div>
+    <link rel="icon" type="image/png" href="assets/logo.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Memory Game</title>
+  </head>
+  <body>
+    <main class="game-container">
+      <header class="game-header">
+        <img src="./assets/logo.svg" alt="Memory Game Logo" class="logo" />
+        <span id="stats" class="stats"> 0 Acertos de 0 Tentativas</span>
+      </header>
+      <div id="deck" class="cards-grid"></div>
 
-    <button class="reset-button">Reiniciar</button>
-  </main>
-  <script src="script.js"></script>
-</body>
+      <button id="reset-button" class="reset-button">Reiniciar</button>
+    </main>
+    <script src="script.js"></script>
+  </body>
 </html>

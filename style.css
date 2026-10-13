@@ -1,10 +1,10 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body{
+body {
   background-color: #000000;
   min-height: 100vh;
   width: 100%;
@@ -15,11 +15,12 @@ body{
 }
 
 .game-container {
-  min-width: 544px
+  min-width: 544px;
+  max-width: 544px;
 }
 
-.game-header{
-  display:flex;
+.game-header {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 32px;
@@ -29,14 +30,14 @@ body{
   font-size: 16px;
 }
 
-.cards-grid{
+.cards-grid {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 5px
+  gap: 5px;
 }
 
-.card{
+.card {
   width: calc(25% - 5px);
   aspect-ratio: 1/1;
   background-color: #8234e0;
@@ -46,22 +47,23 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
-.revealed{
+.revealed {
   background-color: #ffffff;
   border-color: #dadada;
 }
 
-.card-emoji{
+.card-emoji {
   font-size: 40px;
   display: none;
 }
 
-.revealed .card-emoji{
+.revealed .card-emoji {
   display: block;
 }
 
-.reset-button{
+.reset-button {
   width: 100%;
   height: 52px;
   background-color: #8234e0;
@@ -76,6 +78,6 @@ body{
   margin-top: 32px;
 }
 
-.reset-button:hover{
+.reset-button:hover {
   background-color: #7029d6;
 }
