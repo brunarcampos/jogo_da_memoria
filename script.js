@@ -24,3 +24,10 @@ const cardItems = [
   {id: 15, content: "🎪", matched: false},
   {id: 16, content: "🎪", matched: false}
 ]
+
+function shuffleCards(array) {
+  const shuffled = array.sort(()=> (Math.random() > 0.5 ? 1 : -1)); // Positivo vai depois, negativo vai antes
+  return shuffled;
+}
+const cards = shuffleCards(cardItems); // Array com as cartas embaralhadas
+console.log(cards); // Exibe as cartas embaralhadas no console para teste
